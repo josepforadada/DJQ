@@ -10,6 +10,7 @@ passport.use(new SpotifyStrategy({
   function(accessToken, refreshToken, expires_in, profile, done) {
     // Here, you will typically find or create a user in your database
     // For now, we'll just pass the profile which contains user info
+    globalRefreshToken = refreshToken; // Save the refresh token
     done(null, profile);
   }
 ));

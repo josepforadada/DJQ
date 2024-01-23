@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const { globalRefreshToken } = require('./auth'); // Import globalRefreshToken
 const SpotifyWebApi = require('spotify-web-api-node');
 
 // Configure Spotify API
@@ -13,6 +14,17 @@ const spotifyApi = new SpotifyWebApi({
 // Assuming you have an access token (you need to implement the logic to retrieve this)
 const accessToken = 'your_spotify_access_token_here';
 spotifyApi.setAccessToken(accessToken);
+
+
+// Function to refresh the access token
+async function refreshAccessToken() {
+  try {
+      const data = await spotifyApi.refreshAccessToken(globalRefreshToken);
+      spotifyApi.setAccessToken(data.body['access_token']);
+  } catch (error) {
+      console.error('Error refreshing access token', error);
+  }
+}
 
 // Home route
 router.get('/', (req, res) => {
