@@ -1,30 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
+const { passport, refreshAccessToken, spotifyApi } = require('./auth'); // Import spotifyApi here
 const { globalRefreshToken } = require('./auth'); // Import globalRefreshToken
 const SpotifyWebApi = require('spotify-web-api-node');
-
-// Configure Spotify API
-const spotifyApi = new SpotifyWebApi({
-  clientId: process.env.SPOTIFY_CLIENT_ID,
-  clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  redirectUri: process.env.SPOTIFY_CALLBACK_URL
-});
-
-// Assuming you have an access token (you need to implement the logic to retrieve this)
-const accessToken = 'your_spotify_access_token_here';
-spotifyApi.setAccessToken(accessToken);
-
-
-// Function to refresh the access token
-async function refreshAccessToken() {
-  try {
-      const data = await spotifyApi.refreshAccessToken(globalRefreshToken);
-      spotifyApi.setAccessToken(data.body['access_token']);
-  } catch (error) {
-      console.error('Error refreshing access token', error);
-  }
-}
 
 // Home route
 router.get('/', (req, res) => {
@@ -52,6 +30,7 @@ router.get('/logout', (req, res) => {
 
 // Route to fetch and return a Spotify playlist
 router.get('/playlist', async (req, res) => {
+  await refreshAccessToken(); // Refresh the token if needed
   try {
     const playlistId = '1y8uGgL1AdkVdZ7jYiNl6W'; // Replace with your playlist ID
     const data = await spotifyApi.getPlaylist(playlistId);

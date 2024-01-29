@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify Playlist Web App</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Spotify Integration App</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <!-- Optionally include Bootstrap for responsive design -->
 </head>
 <body>
     <header>
-        <h1>My Spotify Playlist</h1>
+        <h1>Welcome to the Spotify Integration App</h1>
     </header>
-
-    <section id="playlist">
-        <div id="playlist-container">
-            <h2>Spotify Playlist</h2>
-            <div id="playlist-details">Loading playlist...</div>
+    <main>
+        <!-- Spotify Login Button -->
+        <button id="loginButton" onclick="window.location.href='/auth/spotify'">Login with Spotify</button>
+        
+        <!-- Dynamic Content Container -->
+        <div id="userContent">
+            <!-- Content updated by JavaScript based on user's login status -->
         </div>
-    </section>
-
+    </main>
     <footer>
-        <p>© 2024 Spotify Playlist Web App</p>
+        <p>&copy; 2024 Spotify Integration App</p>
     </footer>
-
-    <script src="script.js"></script>
+    <script src="script.js"></script> <!-- JavaScript for dynamic content and interactions -->
 </body>
+</html>
 </html>
